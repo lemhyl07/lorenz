@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FactCheck Health Hub</title>
+<style>
+/* ===========================
+   GLOBAL STYLES
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background: #f7f8f9;
+    color: #333;
+}
+
+/* ===========================
+   NAVIGATION BAR
+=========================== */
+nav {
+    width: 100%;
+    background: #2c7a2f;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: #1f5a21;
+}
+
+/* ===========================
+   PAGE SECTIONS
+=========================== */
+.page {
+    display: none;
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    flex: 1; /* Takes remaining vertical space */
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===========================
+   HOME PAGE
+=========================== */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    color: #2c7a2f;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #555;
+}
+
+/* ===========================
+   MYTH CARDS
+=========================== */
+.myth-card {
+    background: #ffcc00;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.myth-card:hover {
+    background: #f5a623;
+}
+
+.fact {
+    max-height: 0;
+    overflow: hidden;
+    background: #e0f7fa;
+    padding: 0 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.fact.show {
+    padding: 15px;
+    max-height: 500px; /* Adjust based on content */
+}
+
+/* ===========================
+   ARTICLES / GUIDES / SPOTLIGHT / NEWS CARDS
+=========================== */
+.card {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 6px solid #2c7a2f;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card h3 {
+    color: #2c7a2f;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #555;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #2c7a2f;
+    color: white;
+    margin-top: auto; /* Push footer to bottom */
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media screen and (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===========================
+     NAVIGATION
+=========================== -->
+<nav>
+<ul>
+    <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+    <li><a href="#" onclick="showPage('myths')">Myths</a></li>
+    <li><a href="#" onclick="showPage('articles')">Articles</a></li>
+    <li><a href="#" onclick="showPage('guides')">Guides</a></li>
+    <li><a href="#" onclick="showPage('spotlight')">Spotlight</a></li>
+    <li><a href="#" onclick="showPage('news')">News</a></li>
+</ul>
+</nav>
+
+<!-- ===========================
+     HOME PAGE
+=========================== -->
+<section id="home" class="page active">
+<div class="hero">
+    <h1>Welcome to FactCheck Health Hub</h1>
+    <p>Your trusted source for medical facts, myth debunking, and science-based health knowledge.</p>
+</div>
+</section>
+
+<!-- ===========================
+     MYTHS PAGE
+=========================== -->
+<section id="myths" class="page">
+<h2>Common Health Myths & Facts</h2><br>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: You must drink 8 glasses of water a day.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Hydration varies by person, and thirst is the best indicator.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Cracking your knuckles causes arthritis.</h3>
+    <div class="fact"><p><strong>Fact:</strong> No scientific evidence links cracking to arthritis.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: You can catch a cold from being out in the cold.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Colds are caused by viruses, not temperature.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Detox diets cleanse your body.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Your liver and kidneys already detoxify naturally.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Eating late causes weight gain.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Weight gain depends on total calories, not the time you eat.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Vaccines cause autism.</h3>
+    <div class="fact"><p><strong>Fact:</strong> There is no scientific link between vaccines and autism.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: You can “sweat out” toxins.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Sweating does not remove toxins; your liver and kidneys do.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Carrots improve night vision dramatically.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Carrots are healthy but won’t drastically change night vision.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: You need supplements to be healthy.</h3>
+    <div class="fact"><p><strong>Fact:</strong> A balanced diet usually provides all necessary nutrients.</p></div>
+</div>
+
+<div class="myth-card" onclick="toggleFact(this)">
+    <h3>Myth: Natural sugar is always healthy.</h3>
+    <div class="fact"><p><strong>Fact:</strong> Even natural sugars should be consumed in moderation.</p></div>
+</div>
+
+</section>
+
+<!-- ===========================
+     ARTICLES PAGE
+=========================== -->
+<section id="articles" class="page">
+<h2>Health Articles</h2><br>
+
+<div class="card">
+    <div class="card-content">
+        <h3>The Truth About Detox Diets</h3>
+        <p>Detox diets often make big promises, but your liver and kidneys already handle detoxification naturally.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>How Sleep Affects Mental Health</h3>
+        <p>Quality sleep plays a major role in emotional balance, learning, and stress management.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Is Organic Food Healthier?</h3>
+        <p>Organic food can be nutritious, but the overall diet matters more than organic labels.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Exercise and Brain Health</h3>
+        <p>Regular physical activity improves memory, focus, and mood.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>The Science of Hydration</h3>
+        <p>Water intake is essential for bodily functions, cognition, and energy levels.</p>
+    </div>
+</div>
+
+</section>
+
+<!-- ===========================
+     GUIDES PAGE
+=========================== -->
+<section id="guides" class="page">
+<h2>Health Guides</h2><br>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Top 5 Ways to Boost Immunity</h3>
+        <p>Eat nutritious foods, sleep well, exercise, manage stress, and stay hydrated.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Maintain a Healthy Lifestyle</h3>
+        <p>Balanced diet, regular activity, and routine checkups ensure overall wellness.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Mental Health Self-Care Guide</h3>
+        <p>Practice mindfulness, take breaks, seek support, and maintain social connections.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Basic First Aid Tips</h3>
+        <p>Learn how to handle minor injuries, burns, cuts, and basic emergency responses.</p>
+    </div>
+</div>
+
+</section>
+
+<!-- ===========================
+     SPOTLIGHT PAGE
+=========================== -->
+<section id="spotlight" class="page">
+<h2>Spotlight</h2><br>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Lorenz Jose Dumaguin</h3>
+        <p>Researcher.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Le Mhyl Docto</h3>
+        <p>Programmer.</p>
+    </div>
+</div>
+
+</section>
+
+<!-- ===========================
+     NEWS PAGE
+=========================== -->
+<section id="news" class="page">
+<h2>Latest Health News</h2><br>
+
+<div class="card">
+    <div class="card-content">
+        <h3>WHO Releases New Dietary Guidelines</h3>
+        <p>The new guidelines focus on reducing sugar and processed foods.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h3>Breakthrough in Diabetes Research</h3>
+        <p>Scientists discover a potential new treatment targeting insulin resistance.</p>
+    </div>
+</div>
+
+</section>
+
+<footer>
+<p>&copy; 2025 FactCheck Health Hub. All Rights Reserved.</p>
+</footer>
+
+<script>
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function toggleFact(element) {
+    let fact = element.querySelector('.fact');
+    fact.classList.toggle('show');
+}
+</script>
+
+</body>
+</html>
